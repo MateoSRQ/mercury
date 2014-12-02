@@ -1,0 +1,156 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+/* splash screen */
+
+
+#splash-image {
+    height: 60%;
+    max-height: 400px;
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%)  rotateX(5deg) scale(1.2);
+    -moz-transform: translate(-50%, -50%)  rotateX(5deg);
+    -ms-transform: translate(-50%, -50%) rotateX(5deg);
+    -o-transform: translate(-50%, -50%)  rotateX(5deg);
+    transform: translate(-50%, -50%)  rotateX(5deg) scale(1.2);
+
+    opacity: 1;
+    z-index: 1000001;
+    box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.45);
+    border: 4px solid white;
+    /*background: #4285F4 !important; */
+    background: #4285f4; /* Old browsers */
+    transition: ease-out 0.2s;
+
+}
+
+
+#splash-image:hover {
+    height: 70%;
+    max-height: 650px;
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    
+    -webkit-transform: translate(-50%, -50%) rotateZ(2deg) rotateX(5deg);
+    -moz-transform: translate(-50%, -50%) rotateZ(2deg) rotateX(5deg);
+    -ms-transform: translate(-50%, -50%) rotateZ(2deg) rotateX(5deg);
+    -o-transform: translate(-50%, -50%) rotateZ(2deg) rotateX(5deg);
+    transform: translate(-50%, -50%) rotateZ(2deg) rotateX(5deg);    
+    opacity: 1;
+    z-index: 1000001;
+    box-shadow: 0 0 12px rgba(0,0,0,.44),0 8px 20px rgba(0,0,0,.35);
+
+
+}
+
+
+#splash-screen {
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000000;
+}
+
+
+#app-map-region {
+  width: 100%;
+  height: 100%;
+  perspective: 1500px; 
+}
+
+.openlayers_map {
+}
+/* CAROUSEL */
+
+#app-carousel-region {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0%;
+    background: transparent;
+    z-index: 10000;
+    opacity: 1;
+    pointer-events:none;
+}
+
+
+
+/* BUBBLEMENU */
+#app-bubblemenu-region {
+    position: absolute;
+    width: 70px;
+    height: 300px;
+    bottom: 5px;
+    right: 5px;
+    background: transparent;
+    z-index: 10000;
+    opacity: 1;
+    /*pointer-events: none;*/
+
+
+}
+
+.tooltip-arrow  {
+    opacity: 0 !important;
+    display: none !important;
+}
+
+.tooltip.left  { left: -55px !important;}
+
+.tooltip-inner  {  background: #4285F4 !important; }
+
+/*
+.openlayers_map {
+  position: relative;
+  width: 60%;
+  background: #ddd;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding: 2em 1.5em;
+  color: rgba(0,0,0, .8);
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.5;
+  margin: 60px auto;
+}
+
+
+.openlayers_map:before, .openlayers_map:after {
+  z-index: -1; 
+  position: absolute; 
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%; 
+  top: 80%;
+  max-width:300px;
+  background: rgba(0, 0, 0, 0.7); 
+  box-shadow: 0 15px 10px rgba(0, 0, 0, 0.7);
+  transform: rotate(-3deg);
+}
+
+.openlayers_map:after {
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+*/

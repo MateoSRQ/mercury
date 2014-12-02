@@ -1,0 +1,188 @@
+/* Coverflow Theme */
+section.bespoke-slide {
+	-webkit-transition: -webkit-transform .7s ease, opacity .7s ease, background-color .7s ease;
+	-moz-transition: -moz-transform .7s ease, opacity .7s ease, background-color .7s ease;
+	-ms-transition: -ms-transform .7s ease, opacity .7s ease, background-color .7s ease;
+	-o-transition: -o-transform .7s ease, opacity .7s ease, background-color .7s ease;
+	transition: transform .7s ease, opacity .7s ease, background-color .7s ease;
+}
+section.bespoke-active {
+	opacity: 1;
+	z-index: 1;
+}
+
+.app_carousel {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    perspective: 1500px;
+}
+
+.app_carousel_item {
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+    transform: none;
+    background: #c0c0c0;
+    /*border-radius: 30px;*/
+    width: 512px;
+    height: 420px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -256px;
+    margin-top: -210px;
+    opacity: 0;
+}
+
+.app_carousel_item .image {
+    position: relative;
+    left: 6px;
+    top: 36px;
+    width: 500px;
+    height: 250px;
+    background-color:#eee;
+    /*border:2px solid #fff;*/
+    overflow: hidden;
+    box-shadow: 0 0 4px rgba(0,0,0,.14),0 2px 1px rgba(0,0,0,.45);
+}
+
+.app_carousel_item .image-caption {
+    position: relative;
+    left: 20px;
+    top: -248px;
+    width: 400px;
+    height: 30px;
+    font-family: 'OpenSans-Bold', Arial;
+    font-size: 1.3em;
+    line-height: 30px;
+    vertical-align: middle;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+
+}
+
+.app_carousel_item .image-legend {
+    position: relative;
+    left: 6px;
+    top: 15px;
+    width: 500px;
+    height: 60px;
+    font-family: 'OpenSans-Light', Arial;
+    font-size: 1.0em;
+    line-height: 20px;
+    vertical-align: middle;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+}
+
+
+.coverflow {
+
+}
+.coverflow section,
+.coverflow .arrow:hover {
+	background: #fff;
+	opacity: 1;
+	-webkit-box-shadow: 3px 3px 8px 2px #C2C2C2;
+	box-shadow: 3px 3px 8px 2px #C2C2C2;
+}
+.coverflow a {
+	color: rgb(42, 206, 185);
+}
+.coverflow section.bespoke-before {
+	-webkit-transform: translateZ(-350px) translateX(-400px) rotateY(45deg);
+	-moz-transform: translateZ(-350px) translateX(-400px) rotateY(45deg);
+	-ms-transform: translateZ(-350px) translateX(-400px) rotateY(45deg);
+	-o-transform: translateZ(-350px) translateX(-400px) rotateY(45deg);
+	transform: translateZ(-350px) translateX(-400px) rotateY(45deg);
+	opacity: 0.75; 
+	z-index: 6;
+	-webkit-box-shadow: 2px 2px 1px 1px rgba(10, 10, 10, 0.5);
+	box-shadow: 2px 2px 1px 1px rgba(10, 10, 10, 0.5);	
+}
+.coverflow section.bespoke-before-3 {
+	-webkit-transform: translateZ(-350px) translateX(-340px) rotateY(45deg);
+	-moz-transform: translateZ(-350px) translateX(-340px) rotateY(45deg);
+	-ms-transform: translateZ(-350px) translateX(-340px) rotateY(45deg);
+	-o-transform: translateZ(-350px) translateX(-340px) rotateY(45deg);
+	transform: translateZ(-350px) translateX(-340px) rotateY(45deg);
+	opacity: 0.80;
+	z-index: 7;
+	-webkit-box-shadow: 2px 2px 1px 1px rgba(10, 10, 10, 0.5);
+	box-shadow: 2px 2px 1px 1px rgba(10, 10, 10, 0.5);	
+}
+.coverflow section.bespoke-before-2 {
+	-webkit-transform: translateZ(-350px) translateX(-280px) rotateY(45deg);
+	-moz-transform: translateZ(-350px) translateX(-280px) rotateY(45deg);
+	-ms-transform: translateZ(-350px) translateX(-280px) rotateY(45deg);
+	-o-transform: translateZ(-350px) translateX(-280px) rotateY(45deg);
+	transform: translateZ(-350px) translateX(-280px) rotateY(45deg);
+	opacity: 0.85; 
+	z-index: 8;
+	-webkit-box-shadow: 2px 2px 1px 2px rgba(10, 10, 10, 0.4);
+	box-shadow: 2px 2px 1px 2px rgba(10, 10, 10, 0.4);	
+}
+.coverflow section.bespoke-before-1 {
+	-webkit-transform: translateZ(-350px) translateX(-220px) rotateY(45deg);
+	-moz-transform: translateZ(-350px) translateX(-220px) rotateY(45deg);
+	-ms-transform: translateZ(-350px) translateX(-220px) rotateY(45deg);
+	-o-transform: translateZ(-350px) translateX(-220px) rotateY(45deg);
+	transform: translateZ(-350px) translateX(-220px) rotateY(45deg);
+	opacity: 0.90; 
+
+	z-index: 9;
+	-webkit-box-shadow: 2px 2px 1px 3px rgba(10, 10, 10, 0.3);
+	box-shadow: 2px 2px 1px 3px rgba(10, 10, 10, 0.3);	
+}
+.coverflow section.bespoke-active {
+	z-index: 10;
+	-webkit-box-shadow: 2px 2px 1px 4px rgba(10, 10, 10, 0.2);
+	box-shadow: 2px 2px 1px 4px rgba(10, 10, 10, 0.2);	
+}
+.coverflow section.bespoke-after {
+	-webkit-transform: translateZ(-350px) translateX(400px) rotateY(-45deg);
+	-moz-transform: translateZ(-350px) translateX(400px) rotateY(-45deg);
+	-ms-transform: translateZ(-350px) translateX(400px) rotateY(-45deg);
+	-o-transform: translateZ(-350px) translateX(400px) rotateY(-45deg);
+	transform: translateZ(-350px) translateX(400px) rotateY(-45deg);
+	opacity: 0.75;
+	z-index: 6;
+	-webkit-box-shadow: 2px 2px 1px 1px rgba(10, 10, 10, 0.5);
+	box-shadow: 2px 2px 1px 1px rgba(10, 10, 10, 0.5);
+}
+.coverflow section.bespoke-after-1 {
+	-webkit-transform: translateZ(-350px) translateX(220px) rotateY(-45deg);
+	-moz-transform: translateZ(-350px) translateX(220px) rotateY(-45deg);
+	-ms-transform: translateZ(-350px) translateX(220px) rotateY(-45deg);
+	-o-transform: translateZ(-350px) translateX(220px) rotateY(-45deg);
+	transform: translateZ(-350px) translateX(220px) rotateY(-45deg);
+	opacity: 0.90; 
+	z-index: 9;
+	-webkit-box-shadow: 2px 2px 1px 3px rgba(10, 10, 10, 0.3);
+	box-shadow: 2px 2px 1px 3px rgba(10, 10, 10, 0.3);
+}
+.coverflow section.bespoke-after-2 {
+	-webkit-transform: translateZ(-350px) translateX(280px) rotateY(-45deg);
+	-moz-transform: translateZ(-350px) translateX(280px) rotateY(-45deg);
+	-ms-transform: translateZ(-350px) translateX(280px) rotateY(-45deg);
+	-o-transform: translateZ(-350px) translateX(280px) rotateY(-45deg);
+	transform: translateZ(-350px) translateX(280px) rotateY(-45deg);
+	opacity: 0.85; 
+	z-index: 8;
+	-webkit-box-shadow: 2px 2px 1px 2px rgba(10, 10, 10, 0.4);
+	box-shadow: 2px 2px 1px 2px rgba(10, 10, 10, 0.4);	
+}
+.coverflow section.bespoke-after-3 {
+	-webkit-transform: translateZ(-350px) translateX(340px) rotateY(-45deg);
+	-moz-transform: translateZ(-350px) translateX(340px) rotateY(-45deg);
+	-ms-transform: translateZ(-350px) translateX(340px) rotateY(-45deg);
+	-o-transform: translateZ(-350px) translateX(340px) rotateY(-45deg);
+	transform: translateZ(-350px) translateX(340px) rotateY(-45deg);
+	opacity: 0.85; 
+	z-index: 7;
+	-webkit-box-shadow: 2px 2px 1px 1px rgba(10, 10, 10, 0.5);
+	box-shadow: 2px 2px 1px 1px rgba(10, 10, 10, 0.5);	
+}
+
+
+
