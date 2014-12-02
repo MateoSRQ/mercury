@@ -95,16 +95,17 @@ require([
         require([
             'modules/map/loader',
             'bootstrap',
-            'material_design',
             'models/layer-item',
             'css!css_bootstrap/bootstrap.min.css',
             'css!css_font-awesome/flaticon.css',
-            'css!css_material_design/material.min.css',
+            
             'css!fonts/open_sans/open_sans.css',
             'velocity'
         ], function() {
             require([
-                'models/layer-collection',
+                'css!css_material_design/material.min.css',
+                'material_design',
+                'models/layer-collection'
             ], function(){
                 App.start();
                 App.MapModule.start({ region: App.mapRegion, map_id: 'map'});
@@ -122,14 +123,14 @@ require([
                         image: 'data/images/image_001.fw.png'
                     },
                     {
-                        type: 'mapquest_sat',
-                        name: 'MapQuest Satelital',
-                        image: 'data/images/image_001.fw.png'
+                        type: 'mapquest_hyb',
+                        name: 'MapQuest Hibrido',
+                        image: 'data/images/image_003.fw.png'
                     },
                     {
-                        type: 'mapquest_Hyb',
-                        name: 'MapQuest Hibrido',
-                        image: 'data/images/image_001.fw.png'
+                        type: 'mapquest_sat',
+                        name: 'MapQuest Satelital',
+                        image: 'data/images/image_002.fw.png'
                     }
                 ]);                
                 

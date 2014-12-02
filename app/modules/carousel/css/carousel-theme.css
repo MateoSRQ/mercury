@@ -14,8 +14,10 @@ section.bespoke-active {
 .app_carousel {
     width: 100%;
     height: 100%;
-    background: transparent;
+    background: rgba(40, 40, 40, 0.5);
+    z-index:20000;
     perspective: 1500px;
+    
 }
 
 .app_carousel_item {
@@ -86,9 +88,7 @@ section.bespoke-active {
 	-webkit-box-shadow: 3px 3px 8px 2px #C2C2C2;
 	box-shadow: 3px 3px 8px 2px #C2C2C2;
 }
-.coverflow a {
-	color: rgb(42, 206, 185);
-}
+
 .coverflow section.bespoke-before {
 	-webkit-transform: translateZ(-350px) translateX(-400px) rotateY(45deg);
 	-moz-transform: translateZ(-350px) translateX(-400px) rotateY(45deg);

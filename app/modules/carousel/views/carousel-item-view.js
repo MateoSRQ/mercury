@@ -16,10 +16,10 @@ define([
                 };
             },
             template: function(model) {
-                console.log('********************');
                 console.log(model);                
                 return _.template(carousel_view)({
-                    'image': model.image
+                    'image': model.image,
+                    'name': model.name
                 })
             },
             onShow: function(){

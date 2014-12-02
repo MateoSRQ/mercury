@@ -66,7 +66,6 @@ require([
                        CarouselModule.decks.next();
                     }
                 }
-                
             });
             App.vent.trigger("CarouselModule:start");
         }
