@@ -51,7 +51,6 @@ require([
             App.execute('debug', 'App MapModule MapModule:start event triggered', 0);
             App.MapModule.initializeMap();
             App.layers.forEach(function(item){
-               console.log(item.get('type'));
                App.MapModule.createLayer(item.get('type'), item.get('name'), {});
             });
             //App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
@@ -62,9 +61,8 @@ require([
 
         App.vent.on('CarouselModule:start', function(){
             App.execute('debug', 'App CarouselModule CarouselModule:start event triggered', 0);
-            console.log(App.layers)
+            $('#app-carousel-region').velocity('fadeIn', 1000);
             App.layers.forEach(function(item){
-               console.log(item.get('name'));
                App.CarouselModule.createCard(item);
             });
             App.CarouselModule.createDeck();

@@ -24,6 +24,7 @@ requirejs.config({
         'bespoke': '../../app/modules/carousel/libs/bespoke/dist/bespoke.min',
         'bespoke-classes': '../../app/modules/carousel/libs/bespoke/dist/bespoke-classes.min',
         'bespoke-keys': '../../app/modules/carousel/libs/bespoke/dist/bespoke-keys.min',
+        'bespoke-scale': '../../app/modules/carousel/libs/bespoke/dist/bespoke-scale.min',
         'slideshowify': '../../app/modules/carousel/libs/slideshowify/slideshowify.min',
         'transit': '../../app/modules/carousel/libs/transit/transit.min',
         'kenburns': '../../app/modules/carousel/libs/kenburns/kenburns.min'
@@ -39,13 +40,14 @@ require([
             'bespoke',
             'bespoke-classes',
             'bespoke-keys',
+            'bespoke-scale',
             //'slideshowify',
             //'kenburns',
             'modules/carousel/views/carousel-view',
             'modules/carousel/models/carousel-collection',
             'css!modules/carousel/css/carousel-theme.css'
         ],   
-        function (bespoke, classes, keys) {
+        function (bespoke, classes, keys, scale) {
             App.module("CarouselModule", function (CarouselModule, App, Backbone, Marionette, $, _) {
                 this.addInitializer(function(){
                     console.log('CarouselModule::initialize function invoked');
@@ -59,7 +61,7 @@ require([
                 }
                 
                 CarouselModule.createDeck = function() {
-                    CarouselModule.decks = bespoke.from('#' + this.options.carousel_id, [classes(), keys()]);
+                    CarouselModule.decks = bespoke.from('#' + this.options.carousel_id, [classes(), keys(), scale('transform')]);
                 }
                 CarouselModule.next = function() {
                     if (CarouselModule.decks) {
