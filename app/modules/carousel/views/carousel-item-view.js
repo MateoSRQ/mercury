@@ -15,8 +15,11 @@ define([
                     //id : this.options.carousel_id
                 };
             },
-            template: function() {
+            template: function(model) {
+                console.log('********************');
+                console.log(model);                
                 return _.template(carousel_view)({
+                    'image': model.image
                 })
             },
             onShow: function(){

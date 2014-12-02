@@ -3,7 +3,7 @@ App.module("CarouselModule", function (CarouselModule) {
     CarouselModule.startWithParent = false;
     CarouselModule.views = {};
     CarouselModule.options = {};
-    CarouselModule.models = {};
+    CarouselModule.collection = {};
     CarouselModule.decks = null;
 });
 
@@ -46,25 +46,17 @@ require([
             'css!modules/carousel/css/carousel-theme.css'
         ],   
         function (bespoke, classes, keys) {
-            console.log(classes)
             App.module("CarouselModule", function (CarouselModule, App, Backbone, Marionette, $, _) {
                 this.addInitializer(function(){
                     console.log('CarouselModule::initialize function invoked');
-                    
-                    /*
-                    var CarouselItemArray = [];
-                    CarouselItemArray.push({name: 'item1'});
-                    CarouselItemArray.push({name: 'item2'});
-                    CarouselItemArray.push({name: 'item3'});
-                    CarouselItemArray.push({name: 'item4'});
-                    CarouselItemArray.push({name: 'item5'});
-                    CarouselItemArray.push({name: 'item6'});
-                    
-                    this.models.CarouselItemCollection = new App.CarouselModule.CarouselItemCollection(CarouselItemArray);
-                    */
-                    this.views.CarouselView = new App.CarouselModule.CarouselView({collection: this.models.CarouselItemCollection, carousel_id: this.options.carousel_id });
+                    this.collection = new App.CarouselModule.CarouselItemCollection();
+                    this.views.CarouselView = new App.CarouselModule.CarouselView({collection: this.collection, carousel_id: this.options.carousel_id });
                     this.options.region.show(this.views.CarouselView);
                 });
+                
+                CarouselModule.createCard = function(item) {
+                    this.collection.add(item);
+                }
                 
                 CarouselModule.createDeck = function() {
                     CarouselModule.decks = bespoke.from('#' + this.options.carousel_id, [classes(), keys()]);

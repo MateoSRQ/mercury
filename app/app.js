@@ -50,14 +50,10 @@ require([
         App.vent.on('MapModule:start', function(){
             App.execute('debug', 'App MapModule MapModule:start event triggered', 0);
             App.MapModule.initializeMap();
-            //App.MapModule.createLayer('mapquest_sat', 'mapquest_sat', {});
-            //App.MapModule.createLayer('mapquest_hyb', 'mapquest_hyb', {});
-            
-
-            
-            
-           
-            
+            App.layers.forEach(function(item){
+               console.log(item.get('type'));
+               App.MapModule.createLayer(item.get('type'), item.get('name'), {});
+            });
             //App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
             //App.MapModule.loadTopoJSON('../../data/distritos_3857_1000x.json') //
             //App.MapModule.D3FromTopoJSON('data/us.json') //*/
@@ -66,10 +62,12 @@ require([
 
         App.vent.on('CarouselModule:start', function(){
             App.execute('debug', 'App CarouselModule CarouselModule:start event triggered', 0);
+            console.log(App.layers)
+            App.layers.forEach(function(item){
+               console.log(item.get('name'));
+               App.CarouselModule.createCard(item);
+            });
             App.CarouselModule.createDeck();
-            App.CarouselModule.next();
-            App.CarouselModule.next();
-            App.CarouselModule.next();
         });
         
         App.vent.on('BubbleMenuModule:start', function(){
@@ -79,28 +77,23 @@ require([
             });
         });
         
-        
-        /*
         App.vent.on('LayerItemCollection:add', function(layer){
             console.log('layer added');
             //App.MapModule.createLayer('mapquest_hyb', 'mapquest_hyb', {});
-            console.log(layer);
-            App.MapModule.createLayer(layer.get('type'), layer.get('name'), {});
+            //console.log(layer);
+            //App.MapModule.createLayer(layer.get('type'), layer.get('name'), {});
             
         });
-        */
+        
         
        
         App.vent.on("BubbleMenuModule:item:click", function(args){
             console.log($(args.delegateTarget).attr('id'))
-            
-            
-            
             App.execute('load', 'carousel', 'CarouselModule', {region: App.carouselRegion, carousel_id: 'carousel' });
         });
         
         require([
-            //'modules/map/loader',
+            'modules/map/loader',
             'bootstrap',
             'material_design',
             'models/layer-item',
@@ -114,7 +107,7 @@ require([
                 'models/layer-collection',
             ], function(){
                 App.start();
-                //App.MapModule.start({ region: App.mapRegion, map_id: 'map'});
+                App.MapModule.start({ region: App.mapRegion, map_id: 'map'});
                 /* this should be on bubble's start! */
                 var _bubblemenuitems = [];
                 _bubblemenuitems.push({id: 'menu_item_1', name: 'menu_item_1', icon: 'flaticon-fire16', icon_alt: 'flaticon-cogs3'});
@@ -122,28 +115,38 @@ require([
                 _bubblemenuitems.push({id: 'menu_item_3', name: 'menu_item_3', icon: 'flaticon-flickr8', icon_alt: 'flaticon-plus26'});
 
                 App.layers = new App.LayerItemCollection;
-                App.layers.on("add", function(layer) {
-                    console.log('added!')
-                    App.vent.trigger('LayerItemCollection:add', layer);
-                });
-
-                
-                
                 App.layers.add([
                     {
                         type: 'mapquest_osm',
                         name: 'MapQuest OSM',
-                        image: 'data/images/image_001.fw'
+                        image: 'data/images/image_001.fw.png'
                     },
                     {
                         type: 'mapquest_sat',
                         name: 'MapQuest Satelital',
-                        image: 'data/images/image_001.fw'
-                    }                    
-                ]);
+                        image: 'data/images/image_001.fw.png'
+                    },
+                    {
+                        type: 'mapquest_Hyb',
+                        name: 'MapQuest Hibrido',
+                        image: 'data/images/image_001.fw.png'
+                    }
+                ]);                
                 
-                App.execute('load', 'map', 'MapModule', {region: App.mapRegion, map_id: 'map', items: _bubblemenuitems});            
+                /*
+                App.layers.on("add", function(layer) {
+                    console.log('added!')
+                    App.vent.trigger('LayerItemCollection:add', layer);
+                });
+                */
+
+                //App.execute('load', 'map', 'MapModule', {region: App.mapRegion, map_id: 'map'});            
                 App.execute('load', 'bubblemenu', 'BubbleMenuModule', {region: App.bubblemenuRegion, bubblemenu_id: 'bubblemenu', items: _bubblemenuitems});            
+
+
+                    
+
+                
             })
         })
     }
