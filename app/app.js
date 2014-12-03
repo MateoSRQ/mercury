@@ -69,7 +69,7 @@ require([
             App.execute('debug', 'App.CarouselModule start event called', 0);
             $('#app-carousel-region').velocity('fadeIn', 1000);
             App.layers.forEach(function(item){
-               App.CarouselModule.createCard(item);
+                App.CarouselModule.createCard(item);
             });
             App.CarouselModule.createDeck();
         });

@@ -77,6 +77,10 @@ section.bespoke-active {
     text-shadow: 0px 1px 1px rgba(0,0,0,0.2);
 }
 
+.app_carousel_item .btn-primary {
+    margin-left: 370px;
+    margin-top: 20px;
+}
 
 .coverflow {
 

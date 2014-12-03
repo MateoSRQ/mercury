@@ -14,9 +14,11 @@ App.CarouselModule.on('before:start', function(options){
 
 requirejs.config({
     shim: {
-        'bespoke':  { deps: [], exports: 'bespoke' },
-        'bespoke-classes':  { deps: ['bespoke'], exports: 'classes' },
-        'bespoke-keys':  { deps: ['bespoke'], exports: 'keys' },
+        'bespoke':  { deps: [] },
+        'bespoke-classes':  { deps: ['bespoke'] },
+        'bespoke-keys':  { deps: ['bespoke']},
+        'bespoke-touch':  { deps: ['bespoke'] },
+        'bespoke-click':  { deps: ['bespoke'], exports: 'click' },
         'transit': { deps: [] },
         'slideshowify': { deps: ['transit'] }
     },
@@ -24,7 +26,8 @@ requirejs.config({
         'bespoke': '../../app/modules/carousel/libs/bespoke/dist/bespoke.min',
         'bespoke-classes': '../../app/modules/carousel/libs/bespoke/dist/bespoke-classes.min',
         'bespoke-keys': '../../app/modules/carousel/libs/bespoke/dist/bespoke-keys.min',
-        'bespoke-scale': '../../app/modules/carousel/libs/bespoke/dist/bespoke-scale.min',
+        'bespoke-touch': '../../app/modules/carousel/libs/bespoke/dist/bespoke-touch.min',
+        'bespoke-click': '../../app/modules/carousel/libs/bespoke/dist/bespoke-click.min',
         'slideshowify': '../../app/modules/carousel/libs/slideshowify/slideshowify.min',
         'transit': '../../app/modules/carousel/libs/transit/transit.min',
         'kenburns': '../../app/modules/carousel/libs/kenburns/kenburns.min'
@@ -40,14 +43,16 @@ require([
             'bespoke',
             'bespoke-classes',
             'bespoke-keys',
-            'bespoke-scale',
+            'bespoke-touch',
+            //'bespoke-click',
+            //'bespoke-click',
             //'slideshowify',
             //'kenburns',
             'modules/carousel/views/carousel-view',
             'modules/carousel/models/carousel-collection',
             'css!modules/carousel/css/carousel-theme.css'
         ],   
-        function (bespoke, classes, keys, scale) {
+        function (bespoke, classes, keys, touch) {
             App.module("CarouselModule", function (CarouselModule, App, Backbone, Marionette, $, _) {
                 this.addInitializer(function(){
                     console.log('CarouselModule::initialize function invoked');
@@ -57,11 +62,13 @@ require([
                 });
                 
                 CarouselModule.createCard = function(item) {
+                    console.log('createcard2')
+                    console.log(item)
                     this.collection.add(item);
                 }
                 
                 CarouselModule.createDeck = function() {
-                    CarouselModule.decks = bespoke.from('#' + this.options.carousel_id, [classes(), keys(), scale('transform')]);
+                    CarouselModule.decks = bespoke.from('#' + this.options.carousel_id, [classes(), keys(), touch()]);
                 }
                 CarouselModule.next = function() {
                     if (CarouselModule.decks) {

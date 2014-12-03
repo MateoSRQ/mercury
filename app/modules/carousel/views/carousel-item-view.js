@@ -3,11 +3,14 @@
 define([
     'text!modules/carousel/templates/carousel-item-view.html',
     ],
-    function(carousel_view){
+    function(carousel_item_view){
         
         App.CarouselModule.CarouselItemView = Backbone.Marionette.ItemView.extend({
             tagName: 'section',
-            triggers: {
+            events: {
+
+                'click .btn-primary': 'click_button',
+                'click': 'click'
             },
             attributes : function () {
                 return {
@@ -16,13 +19,22 @@ define([
                 };
             },
             template: function(model) {
+                console.log('model')
                 console.log(model);                
-                return _.template(carousel_view)({
+                return _.template(carousel_item_view)({
                     'image': model.image,
                     'name': model.name
                 })
             },
             onShow: function(){
+            },
+            click: function(i, e) {
+                //e.preventDefault();
+                console.log('con el click click click')
+            },
+            click_button: function(i, e) {
+                //e.preventDefault();
+                console.log('con el click click clock')
             }
         });
     }
