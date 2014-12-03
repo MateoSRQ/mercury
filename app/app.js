@@ -5,23 +5,27 @@ require([
     'marionette'
 ],
     function (Marionette) {
+        // App definition
         window.App = new Backbone.Marionette.Application({
         });
      
+        // App main regions, css in root/css/index.css
         App.addRegions({
            mapRegion: '#app-map-region',
            carouselRegion: '#app-carousel-region',
            bubblemenuRegion: '#app-bubblemenu-region'
         });
 
+        // App debug command, only show messages greater than global debug set.
         App.commands.setHandler("debug", function(text, level){
             if (level >=  window.debug){
                 console.log('debug: ' + text);
             }
         });
         
+        // RequireJS module load command, to load module located in root\app\modules\dirname, with name module, and start options objects.
         App.commands.setHandler("load", function(dirname, module, options){
-            App.execute('debug', 'Application load command for module ' + module);
+            App.execute('debug', 'App.commands.setHandler() called.', 0);
             if (!eval('App.' + module)) {
                 require([
                     'modules/' + dirname + '/loader',
@@ -31,24 +35,24 @@ require([
             }
         });
 
+        // App before:start event function
         App.on('before:start', function(options){
-            App.execute('debug', 'Application before:start event launched', 0);
+            App.execute('debug', 'App before:start event called.', 0);
         });
         
+        // App start event function, which enable
         App.on('start', function(options){
-            App.execute('debug', 'Application start event launched', 0); 
+            App.execute('debug', 'App start event called.', 0); 
             if (Backbone.history){
                 Backbone.history.start();
-                App.execute('debug', 'Application history started', 0); 
+                App.execute('debug', 'App history started', 0); 
             }
         });
         
-        App.addLayer = function(collection) {
-            console.log(collection);
-        };
-        
+        // App.MapModule start event function, used to initialize map layers based on App.layers collection.
+        // Also ends splash screen.
         App.vent.on('MapModule:start', function(){
-            App.execute('debug', 'App MapModule MapModule:start event triggered', 0);
+            App.execute('debug', 'App.MapModule start event called.', 0);
             App.MapModule.initializeMap();
             App.layers.forEach(function(item){
                App.MapModule.createLayer(item.get('type'), item.get('name'), {});
@@ -58,9 +62,11 @@ require([
             //App.MapModule.D3FromTopoJSON('data/us.json') //*/
             $('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });
         });
-
+        
+        // App.CarouselModule start event function, used to initialize carousel cards based on App.lateyers collection.
+        // Also creates deck
         App.vent.on('CarouselModule:start', function(){
-            App.execute('debug', 'App CarouselModule CarouselModule:start event triggered', 0);
+            App.execute('debug', 'App.CarouselModule start event called', 0);
             $('#app-carousel-region').velocity('fadeIn', 1000);
             App.layers.forEach(function(item){
                App.CarouselModule.createCard(item);
@@ -68,8 +74,9 @@ require([
             App.CarouselModule.createDeck();
         });
         
+        // App BubbleMenuModule start event function, used to add tooltips to menu items
         App.vent.on('BubbleMenuModule:start', function(){
-            App.execute('debug', 'App BubbleMenuModule BubbleMenuModule:start event triggered', 0);
+            App.execute('debug', 'App.BubbleMenuModule start event called.', 0);
             $('.bubblemenu-item').tooltip({
                 placement: 'left'
             });
