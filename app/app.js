@@ -26,12 +26,9 @@ require([
                     console.log('checking ' + item.get('name'));
                     if (item.get('name') == layerName) {
                         App.MapModule.setLayerVisibility(item.get('name'), true);
-                        console.log('should be true')
                     }
                     else {
-
                         App.MapModule.setLayerVisibility(item.get('name'), false);
-                        console.log('should be false')
                     }
                 }
             }) 
@@ -76,7 +73,7 @@ require([
             App.execute('debug', 'App.MapModule start event called.', 0);
             App.MapModule.initializeMap();
             var item = App.layers.at(0);
-               App.MapModule.createLayer(item.get('type'), item.get('name'), {});
+               App.MapModule.createLayer(item.get('type'), item.get('name'), {}); // CHECK THIS
 
             //App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
             //App.MapModule.loadTopoJSON('../../data/distritos_3857_1000x.json') //
@@ -111,10 +108,12 @@ require([
         });
         
         App.vent.on('CarouselView:button:click', function(item){
-            console.log(item)
-            console.log('yyyclick')
+            console.log(item);
             App.MapModule.createLayer(item.get('type'), item.get('name'), item.get('options'));
-            App.setBaseLayer(item.get('name'))
+            if (item.get('isBase')) {
+                App.setBaseLayer(item.get('name'));
+            }
+            
             $('#app-carousel-region').velocity('fadeOut', 1000);
         });
 
@@ -169,10 +168,12 @@ require([
                     },
                     {
                         type: 'local_topojson',
-                        url:  '../../data/distritos_3857_1000x.json',
                         name: 'Perú Población 2014',
                         image: 'data/images/image_002.fw.png',
-                        isBase: false
+                        isBase: false,
+                        options: {
+                            url:  '../../data/distritos_3857_1000x.json'
+                        }
                     }
                 ]);                
                 

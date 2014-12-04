@@ -138,39 +138,42 @@ require([
                 
                 var createTopoJSONLayerfromLocal = function(layerName, options) {
                     console.log('topo');
-                    console.log(options.url);
+                    console.log(options);
                     
                     require([
                         'text!' + options.url
                     ], function (urldata){
                         console.log('urldata');
-                        
                         var topoJSONReader = new ol.format.TopoJSON();
                         var _features = topoJSONReader.readFeatures(urldata)
                         
-                        /*
                         var styleArray = [new ol.style.Style({
                           fill: new ol.style.Fill({
-                            color: 'rgba(255, 255, 255, 0.6)'
+                            color: 'rgba(255, 255, 255, 0.2)'
                           }),
                           stroke: new ol.style.Stroke({
                             color: '#319FD3',
                             width: 1
                           })
                         })];
-                        */
+                        
                         App.MapModule.layers[layerName] = {
                             layer: new ol.layer.Vector({
                                 source: new ol.source.Vector({
                                     projection: 'EPSG:3857',
                                     features: _features
-                                })
+                                }),
+                                                            
+                                style: function(feature, resolution) {
+                                    // don't want to render the full world polygon, which repeats all countries
+                                    return styleArray;
+                                }
+                                
                             }),
                             type: 'vector',
                         };   
-                        App.MapModule.mapHandler.addLayer(vector);
+                        App.MapModule.mapHandler.addLayer(App.MapModule.layers[layerName].layer);
                     })                     
-                 
                 }
             
                 var createMapQuestSatelliteLayer = function(layerName, options) {
@@ -221,33 +224,23 @@ require([
                                 createMapQuestOSMLayer(layerName, options);
                                 break;
                             case 'local_topojson':
+                                console.log('OPTIONS');
+                                console.log(options)
                                 createTopoJSONLayerfromLocal(layerName, options);
                                 break;
                         }
                     }
                     else {
-                        console.log('rrr');
                         MapModule.setLayerVisibility(layerName, true);
                     }
-
                 }
-                
-
-                
                 MapModule.setLayerVisibility = function(layerName, visibility) {
                     if (typeof(MapModule.layers[layerName]) !== undefined && MapModule.layers[layerName]) {
-                        console.log('abc');
-
                         var _layers = this.mapHandler.getLayers();
-                        
                         _layers.forEach(function(item){
-
-
                             if (item.get('name') == layerName) {
-                                console.log('comparing ' + item.get('name') + ' with ' + layerName + ' to ' + visibility)
                                 item.setVisible(visibility);
                             }
-
                         })
                     }
                 }
