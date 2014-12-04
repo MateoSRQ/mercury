@@ -1,3 +1,4 @@
+/* setup.js */
 'use strict';
 window.App = null;
 window.debug = 0;
