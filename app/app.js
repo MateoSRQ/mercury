@@ -113,7 +113,7 @@ require([
         App.vent.on('CarouselView:button:click', function(item){
             console.log(item)
             console.log('yyyclick')
-            App.MapModule.createLayer(item.get('type'), item.get('name'), {});
+            App.MapModule.createLayer(item.get('type'), item.get('name'), item.get('options'));
             App.setBaseLayer(item.get('name'))
             $('#app-carousel-region').velocity('fadeOut', 1000);
         });
@@ -166,6 +166,13 @@ require([
                         name: 'MapQuest Satelital',
                         image: 'data/images/image_002.fw.png',
                         isBase: true
+                    },
+                    {
+                        type: 'local_topojson',
+                        url:  '../../data/distritos_3857_1000x.json',
+                        name: 'Perú Población 2014',
+                        image: 'data/images/image_002.fw.png',
+                        isBase: false
                     }
                 ]);                
                 

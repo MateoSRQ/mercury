@@ -43,11 +43,6 @@ require([
                     this.mapHandler = new ol.Map({
                         target: this.options.map_id,
                         layers: [
-                            /*
-                            new ol.layer.Tile({
-                                source: new ol.source.MapQuest({layer: 'osm'})
-                            })
-                            */
                         ],
                         view: new ol.View({
                             center: ol.proj.transform([37.41, 8.82], 'EPSG:4326', 'EPSG:3857'),
@@ -140,6 +135,43 @@ require([
                         App.MapModule.mapHandler.addLayer(vector);
                     }) 
                 }
+                
+                var createTopoJSONLayerfromLocal = function(layerName, options) {
+                    console.log('topo');
+                    console.log(options.url);
+                    
+                    require([
+                        'text!' + options.url
+                    ], function (urldata){
+                        console.log('urldata');
+                        
+                        var topoJSONReader = new ol.format.TopoJSON();
+                        var _features = topoJSONReader.readFeatures(urldata)
+                        
+                        /*
+                        var styleArray = [new ol.style.Style({
+                          fill: new ol.style.Fill({
+                            color: 'rgba(255, 255, 255, 0.6)'
+                          }),
+                          stroke: new ol.style.Stroke({
+                            color: '#319FD3',
+                            width: 1
+                          })
+                        })];
+                        */
+                        App.MapModule.layers[layerName] = {
+                            layer: new ol.layer.Vector({
+                                source: new ol.source.Vector({
+                                    projection: 'EPSG:3857',
+                                    features: _features
+                                })
+                            }),
+                            type: 'vector',
+                        };   
+                        App.MapModule.mapHandler.addLayer(vector);
+                    })                     
+                 
+                }
             
                 var createMapQuestSatelliteLayer = function(layerName, options) {
                     App.MapModule.layers[layerName] = {
@@ -187,6 +219,9 @@ require([
                                 break;
                             case 'mapquest_osm':
                                 createMapQuestOSMLayer(layerName, options);
+                                break;
+                            case 'local_topojson':
+                                createTopoJSONLayerfromLocal(layerName, options);
                                 break;
                         }
                     }
