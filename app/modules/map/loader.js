@@ -22,7 +22,7 @@ requirejs.config({
     paths: {
         'd3': '../../app/modules/map/libs/d3/d3.min',
         'topojson': '../../app/modules/map/libs/d3/topojson.min',
-        'ol': '../../app/modules/map/libs/openlayers/build/ol',
+        'ol': '../../app/modules/map/libs/openlayers/build/ol-debug',
         'css_ol': '../../app/modules/map/libs/openlayers/css/ol.css'
     }
 });
@@ -144,9 +144,10 @@ require([
                 var createMapQuestSatelliteLayer = function(layerName, options) {
                     App.MapModule.layers[layerName] = {
                         layer: new ol.layer.Tile({
-                                source: new ol.source.MapQuest({layer: 'sat'})
+                                source: new ol.source.MapQuest({layer: 'sat'}),
+                                name: layerName
                             }),
-                        type: 'raster'
+                        type: 'raster',
                     };
                     App.MapModule.mapHandler.addLayer(App.MapModule.layers[layerName].layer);
                 }
@@ -154,7 +155,8 @@ require([
                 var createMapQuestHybridLayer = function(layerName, options) {
                     App.MapModule.layers[layerName] = {
                         layer: new ol.layer.Tile({
-                                source: new ol.source.MapQuest({layer: 'hyb'})
+                                source: new ol.source.MapQuest({layer: 'hyb'}),
+                                name: layerName
                             }),
                         type: 'raster'
                     };
@@ -164,7 +166,8 @@ require([
                 var createMapQuestOSMLayer = function(layerName, options) {
                     App.MapModule.layers[layerName] = {
                         layer: new ol.layer.Tile({
-                                source: new ol.source.MapQuest({layer: 'osm'})
+                                source: new ol.source.MapQuest({layer: 'osm'}),
+                                name: layerName
                             }),
                         type: 'raster'
                     };
@@ -172,17 +175,45 @@ require([
                 }
                                 
                 MapModule.createLayer = function(layerType, layerName, options) {
-                    console.log('createlayer');
-                    switch (layerType) {
-                        case 'mapquest_sat':
-                            createMapQuestSatelliteLayer(layerName, options);
-                            break;
-                        case 'mapquest_hyb':
-                            createMapQuestHybridLayer(layerName, options);
-                            break;
-                        case 'mapquest_osm':
-                            createMapQuestOSMLayer(layerName, options);
-                            break;
+                    
+                    if (typeof(MapModule.layers[layerName]) !== undefined && !MapModule.layers[layerName]) {
+                        console.log('createlayer');
+                        switch (layerType) {
+                            case 'mapquest_sat':
+                                createMapQuestSatelliteLayer(layerName, options);
+                                break;
+                            case 'mapquest_hyb':
+                                createMapQuestHybridLayer(layerName, options);
+                                break;
+                            case 'mapquest_osm':
+                                createMapQuestOSMLayer(layerName, options);
+                                break;
+                        }
+                    }
+                    else {
+                        console.log('rrr');
+                        MapModule.setLayerVisibility(layerName, true);
+                    }
+
+                }
+                
+
+                
+                MapModule.setLayerVisibility = function(layerName, visibility) {
+                    if (typeof(MapModule.layers[layerName]) !== undefined && MapModule.layers[layerName]) {
+                        console.log('abc');
+
+                        var _layers = this.mapHandler.getLayers();
+                        
+                        _layers.forEach(function(item){
+
+
+                            if (item.get('name') == layerName) {
+                                console.log('comparing ' + item.get('name') + ' with ' + layerName + ' to ' + visibility)
+                                item.setVisible(visibility);
+                            }
+
+                        })
                     }
                 }
                 

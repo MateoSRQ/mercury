@@ -16,8 +16,7 @@ section.bespoke-active {
     height: 100%;
     background: rgba(40, 40, 40, 0.5);
     z-index:20000;
-    perspective: 1500px;
-    
+    perspective: 1200px;
 }
 
 .app_carousel_item {

@@ -7,7 +7,10 @@ require([
     function (Marionette) {
         // App definition
         window.App = new Backbone.Marionette.Application({
+            
         });
+        
+        App.layers = null;
      
         // App main regions, css in root/css/index.css
         App.addRegions({
@@ -15,6 +18,24 @@ require([
            carouselRegion: '#app-carousel-region',
            bubblemenuRegion: '#app-bubblemenu-region'
         });
+        
+        App.setBaseLayer = function(layerName) {
+            console.log('set Base Layer to ' + layerName)
+            App.layers.each( function(item){
+                if (item.get('isBase')) {
+                    console.log('checking ' + item.get('name'));
+                    if (item.get('name') == layerName) {
+                        App.MapModule.setLayerVisibility(item.get('name'), true);
+                        console.log('should be true')
+                    }
+                    else {
+
+                        App.MapModule.setLayerVisibility(item.get('name'), false);
+                        console.log('should be false')
+                    }
+                }
+            }) 
+        }
 
         // App debug command, only show messages greater than global debug set.
         App.commands.setHandler("debug", function(text, level){
@@ -54,9 +75,9 @@ require([
         App.vent.on('MapModule:start', function(){
             App.execute('debug', 'App.MapModule start event called.', 0);
             App.MapModule.initializeMap();
-            App.layers.forEach(function(item){
+            var item = App.layers.at(0);
                App.MapModule.createLayer(item.get('type'), item.get('name'), {});
-            });
+
             //App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
             //App.MapModule.loadTopoJSON('../../data/distritos_3857_1000x.json') //
             //App.MapModule.D3FromTopoJSON('data/us.json') //*/
@@ -67,7 +88,6 @@ require([
         // Also creates deck
         App.vent.on('CarouselModule:start', function(){
             App.execute('debug', 'App.CarouselModule start event called', 0);
-            $('#app-carousel-region').velocity('fadeIn', 1000);
             App.layers.forEach(function(item){
                 App.CarouselModule.createCard(item);
             });
@@ -90,11 +110,18 @@ require([
             
         });
         
-        
-       
+        App.vent.on('CarouselView:button:click', function(item){
+            console.log(item)
+            console.log('yyyclick')
+            App.MapModule.createLayer(item.get('type'), item.get('name'), {});
+            App.setBaseLayer(item.get('name'))
+            $('#app-carousel-region').velocity('fadeOut', 1000);
+        });
+
         App.vent.on("BubbleMenuModule:item:click", function(args){
             console.log($(args.delegateTarget).attr('id'))
             App.execute('load', 'carousel', 'CarouselModule', {region: App.carouselRegion, carousel_id: 'carousel' });
+            $('#app-carousel-region').velocity('fadeIn', 1000);
         });
         
         require([
@@ -125,17 +152,20 @@ require([
                     {
                         type: 'mapquest_osm',
                         name: 'MapQuest OSM',
-                        image: 'data/images/image_001.fw.png'
+                        image: 'data/images/image_001.fw.png',
+                        isBase: true
                     },
                     {
                         type: 'mapquest_hyb',
                         name: 'MapQuest Hibrido',
-                        image: 'data/images/image_003.fw.png'
+                        image: 'data/images/image_003.fw.png',
+                        isBase: true
                     },
                     {
                         type: 'mapquest_sat',
                         name: 'MapQuest Satelital',
-                        image: 'data/images/image_002.fw.png'
+                        image: 'data/images/image_002.fw.png',
+                        isBase: true
                     }
                 ]);                
                 

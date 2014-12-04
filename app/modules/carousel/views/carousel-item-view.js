@@ -30,11 +30,11 @@ define([
             },
             click: function(i, e) {
                 //e.preventDefault();
-                console.log('con el click click click')
+
             },
             click_button: function(i, e) {
                 //e.preventDefault();
-                console.log('con el click click clock')
+                App.vent.trigger('CarouselView:button:click', this.model)
             }
         });
     }
