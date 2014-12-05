@@ -38,10 +38,26 @@ require([
             'css!modules/map/css/map-module.css'
         ],   
         function (ol, d3, topojson) {
+            
+            var mousePositionControl = new ol.control.MousePosition({
+              coordinateFormat: ol.coordinate.createStringXY(4),
+              projection: 'EPSG:4326',
+              // comment the following two lines to have the mouse position
+              // be placed within the map.
+              className: 'custom-mouse-position',
+              target: document.getElementById('mouse-position'),
+              undefinedHTML: '&nbsp;'
+            });
+            
             App.module("MapModule", function (MapModule, App, Backbone, Marionette, $, _) {
                 MapModule.initializeMap = function() {
                     this.mapHandler = new ol.Map({
                         target: this.options.map_id,
+                        controls: ol.control.defaults({
+                            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+                              collapsible: false
+                            })
+                          }).extend([mousePositionControl]),
                         layers: [
                         ],
                         view: new ol.View({
@@ -49,6 +65,7 @@ require([
                             zoom: 4,
                         })
                     })
+
                 };
                 this.addInitializer(function(){
                     console.log('[MAP LOADER.JS] MapModule::initialize function invoked');
@@ -145,17 +162,28 @@ require([
                     ], function (urldata){
                         console.log('urldata');
                         var topoJSONReader = new ol.format.TopoJSON();
-                        var _features = topoJSONReader.readFeatures(urldata)
+                        var _features = topoJSONReader.readFeatures(urldata);
                         
-                        var styleArray = [new ol.style.Style({
-                          fill: new ol.style.Fill({
-                            color: 'rgba(255, 255, 255, 0.2)'
-                          }),
-                          stroke: new ol.style.Stroke({
-                            color: '#319FD3',
-                            width: 1
-                          })
-                        })];
+                        // colors
+                        
+                      
+
+                        var quantile = d3.scale.quantile()
+                        .domain(_.map(_features, function(feature){ return feature.get('POP'); }))
+                        .range(options.colors);
+
+                        var styleFunction = function(feature, resolution) {
+                            return  [new ol.style.Style({
+                                fill: new ol.style.Fill({
+                                    //color: 'rgba(255, 255, 255, 0.4)'
+                                    color: quantile(feature.get('POP'))
+                                }),
+                                stroke: new ol.style.Stroke({
+                                    color: '#319FD3',
+                                    width: 1
+                                })
+                            })];
+                        };
                         
                         App.MapModule.layers[layerName] = {
                             layer: new ol.layer.Vector({
@@ -166,7 +194,7 @@ require([
                                                             
                                 style: function(feature, resolution) {
                                     // don't want to render the full world polygon, which repeats all countries
-                                    return styleArray;
+                                    return styleFunction(feature, resolution);
                                 }
                                 
                             }),
@@ -207,6 +235,18 @@ require([
                         type: 'raster'
                     };
                     App.MapModule.mapHandler.addLayer(App.MapModule.layers[layerName].layer);
+                }
+                
+                /* Should make it generic */
+                MapModule.setCenter = function (coordinates) {
+                    
+                    var _proj = ol.proj.transform(coordinates, 'EPSG:4326', 'EPSG:3857');
+                    App.MapModule.mapHandler.getView().setCenter(_proj);
+                }
+                
+                /* Should make it generic */
+                MapModule.setZoom = function (level) {
+                    App.MapModule.mapHandler.getView().setZoom(level);
                 }
                                 
                 MapModule.createLayer = function(layerType, layerName, options) {

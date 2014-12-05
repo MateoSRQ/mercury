@@ -108,10 +108,20 @@ require([
         });
         
         App.vent.on('CarouselView:button:click', function(item){
+            console.log('hhhhhh')
             console.log(item);
             App.MapModule.createLayer(item.get('type'), item.get('name'), item.get('options'));
             if (item.get('isBase')) {
                 App.setBaseLayer(item.get('name'));
+            }
+            if ((item.get('options') !== undefined && item.get('options').center !== undefined)) {
+                console.log(item.get('options').center)
+                App.MapModule.setCenter(item.get('options').center);
+            }
+            
+            if ((item.get('options') !== undefined && item.get('options').zoom !== undefined)) {
+                console.log(item.get('options').zoom)
+                App.MapModule.setZoom(item.get('options').zoom);
             }
             
             $('#app-carousel-region').velocity('fadeOut', 1000);
@@ -169,10 +179,19 @@ require([
                     {
                         type: 'local_topojson',
                         name: 'Perú Población 2014',
-                        image: 'data/images/image_002.fw.png',
+                        image: 'data/images/image_004.fw.png',
                         isBase: false,
                         options: {
-                            url:  '../../data/distritos_3857_1000x.json'
+                            url:  '../../data/peru_3857_normalized.json',
+                            //colors: ['#ffffcc', '#a1dab4', '#41b6c4', '#2c7fb8', '#253494'],
+                            colors: ['#a6cee3','#1f78b4','#b2df8a','#33a02c]'],
+
+
+
+                            center: [-75,-10.50],
+                            zoom: 5
+                            //center: [-72,-15],
+                            //zoom: 7
                         }
                     }
                 ]);                
