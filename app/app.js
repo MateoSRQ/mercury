@@ -78,7 +78,7 @@ require([
             //App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
             //App.MapModule.loadTopoJSON('../../data/distritos_3857_1000x.json') //
             //App.MapModule.D3FromTopoJSON('data/us.json') //*/
-            $('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });
+            //$('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });
         });
         
         // App.CarouselModule start event function, used to initialize carousel cards based on App.lateyers collection.
@@ -134,7 +134,7 @@ require([
         });
         
         require([
-            'modules/map/loader',
+            //'modules/map/loader',
             'bootstrap',
             'models/layer-item',
             'css!css_bootstrap/bootstrap.min.css',
@@ -149,13 +149,13 @@ require([
                 'models/layer-collection'
             ], function(){
                 App.start();
-                App.MapModule.start({ region: App.mapRegion, map_id: 'map'});
+                //App.MapModule.start({ region: App.mapRegion, map_id: 'map'});
                 /* this should be on bubble's start! */
-                var _bubblemenuitems = [];
-                _bubblemenuitems.push({id: 'menu_item_1', name: 'menu_item_1', icon: 'flaticon-fire16', icon_alt: 'flaticon-cogs3'});
-                _bubblemenuitems.push({id: 'menu_item_2', name: 'menu_item_2', icon: 'flaticon-comment33', icon_alt: 'flaticon-fire16'});
-                _bubblemenuitems.push({id: 'menu_item_3', name: 'menu_item_3', icon: 'flaticon-flickr8', icon_alt: 'flaticon-plus26'});
-
+                //var _bubblemenuitems = [];
+                //_bubblemenuitems.push({id: 'menu_item_1', name: 'menu_item_1', icon: 'flaticon-fire16', icon_alt: 'flaticon-cogs3'});
+                //_bubblemenuitems.push({id: 'menu_item_2', name: 'menu_item_2', icon: 'flaticon-comment33', icon_alt: 'flaticon-fire16'});
+                //_bubblemenuitems.push({id: 'menu_item_3', name: 'menu_item_3', icon: 'flaticon-flickr8', icon_alt: 'flaticon-plus26'});
+                /*
                 App.layers = new App.LayerItemCollection;
                 App.layers.add([
                     {
@@ -193,8 +193,23 @@ require([
                             //center: [-72,-15],
                             //zoom: 7
                         }
-                    }
-                ]);                
+                    },
+                    /*
+                    {
+                        type: 'local_topojson2',
+                        name: 'Arequipa',
+                        image: 'data/images/image_004.fw.png',
+                        isBase: false,
+                        options: {
+                            url:  '../../data/peru_3857_normalized.json',
+                            colors: ['#ffffcc', '#a1dab4', '#41b6c4', '#2c7fb8', '#253494'],
+                            center: [-72,-15],
+                            zoom: 7
+                        }
+                    },
+                    */
+                   
+                //]);                
                 
                 /*
                 App.layers.on("add", function(layer) {
@@ -204,11 +219,11 @@ require([
                 */
 
                 //App.execute('load', 'map', 'MapModule', {region: App.mapRegion, map_id: 'map'});            
-                App.execute('load', 'bubblemenu', 'BubbleMenuModule', {region: App.bubblemenuRegion, bubblemenu_id: 'bubblemenu', items: _bubblemenuitems});            
-
+                //App.execute('load', 'bubblemenu', 'BubbleMenuModule', {region: App.bubblemenuRegion, bubblemenu_id: 'bubblemenu', items: _bubblemenuitems});            
+                App.execute('load', 'layout', 'LayoutModule', {region: App.mapRegion, map_id: 'map'}); 
 
                     
-
+                $('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });
                 
             })
         })

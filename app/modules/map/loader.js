@@ -187,6 +187,7 @@ require([
                         
                         App.MapModule.layers[layerName] = {
                             layer: new ol.layer.Vector({
+                                opacity: 0.5,
                                 source: new ol.source.Vector({
                                     projection: 'EPSG:3857',
                                     features: _features
