@@ -20,24 +20,24 @@ html, body {
 }
 
 #layout_layout_1 {
-    width: 50%;
-    height: 100%;
+    width: 100px;
+    height: 100px;
     background: #ff0000;
-    float: left;
+
 }
 
 #layout_layout_2 {
-    width: 50%;
-    height: 50%;
+    width: 100px;
+    height: 100px;
     background: #00ff00;
-    float: left;
+
 }
 
 #layout_layout_3 {
-    width: 50%;
-    height: 50%;
+    width: 100px;
+    height: 100px;
     background: #0000ff;
-    float: left;
+
 }
 
 

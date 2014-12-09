@@ -17,11 +17,14 @@ App.LayoutModule.on('before:start', function(options){
 requirejs.config({
     shim: {
         'jquery-bridget': { deps:['jquery'], exports: '' },
-        'packery':  { deps: ['jquery-bridget'], exports: '' }
+        'packery':  { deps: ['jquery-bridget'], exports: '' },
+        'jquery-ui': { deps:['jquery'] }
     },
     paths: {
         'packery': '../../app/modules/layout/libs/packery/dist/packery.pkgd.min',
-        'jquery-bridget': '../../app/modules/layout/libs/packery/dist/jquery-bridget.min'
+        'jquery-bridget': '../../app/modules/layout/libs/packery/dist/jquery-bridget.min',
+        'jquery-ui': '../../app/modules/layout/libs/jquery-ui-1.11.2/jquery-ui.min',
+        'jquery-ui-css': '../../app/modules/layout/libs/jquery-ui-1.11.2',
     }
 });
 
@@ -32,15 +35,18 @@ require([
     function() {
         require([
             //'packery',
+            'jquery-ui',
             'modules/layout/views/layout-view',
             'modules/layout/models/layout-collection',
-            'css!modules/layout/css/layout.css'
+            'css!modules/layout/css/layout.css',
+            'css!jquery-ui-css/jquery-ui.css'
         ],   
         function (Packery) {
             App.module("LayoutModule", function (LayoutModule, App, Backbone, Marionette, $, _) {
                 this.addInitializer(function(){
                     App.execute('debug', 'App.LayoutModule addInitializer function called.', 0);
                     this.collection = new App.LayoutModule.LayoutItemCollection();
+                    //App.LayoutModule.options = this.options;
                     this.views.LayoutView = new App.LayoutModule.LayoutView({collection: this.collection, layout_id: this.options.layout_id });
                     this.options.region.show(this.views.LayoutView);
                     //this.layoutHandler = $( '#' + this.options.layout_id).packery();
@@ -56,6 +62,19 @@ require([
                         isHorizontal: true
                     });
                     */
+                    var self = this;
+                    _.each(layouts, function(layout){
+                        console.log(layout.id)
+
+                        $('#layout_'+ layout.id )
+                        .resizable({
+                            alwaysRelative: true
+                        })
+                        .draggable({
+                            containment: 'parent',
+                            snap: layout.snap
+                        })
+                    })
                     App.vent.trigger('LayoutModule:add', layouts);
                 };
             });
