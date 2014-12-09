@@ -62,8 +62,6 @@ require([
                 });
                 
                 CarouselModule.createCard = function(item) {
-                    console.log('createcard2')
-                    console.log(item)
                     this.collection.add(item);
                 }
                 

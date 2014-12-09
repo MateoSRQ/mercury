@@ -7,16 +7,16 @@ require([
     function (Marionette) {
         // App definition
         window.App = new Backbone.Marionette.Application({
-            
         });
         
         App.layers = null;
      
         // App main regions, css in root/css/index.css
         App.addRegions({
-           mapRegion: '#app-map-region',
-           carouselRegion: '#app-carousel-region',
-           bubblemenuRegion: '#app-bubblemenu-region'
+            layoutRegion: '#app-layout-region', 
+            //mapRegion: '#app-map-region',
+            carouselRegion: '#app-carousel-region',
+            bubblemenuRegion: '#app-bubblemenu-region'
         });
         
         App.setBaseLayer = function(layerName) {
@@ -99,6 +99,22 @@ require([
             });
         });
         
+        App.vent.on('LayoutModule:start', function(){
+            App.execute('debug', 'App.LayoutModule start event called.', 0);
+            App.LayoutModule.add([
+                {
+                    id: 'layout_1'
+                },
+                {
+                    id: 'layout_2'
+                },
+                {
+                    id: 'layout_3'
+                }
+            ]); 
+        });
+        
+        
         App.vent.on('LayerItemCollection:add', function(layer){
             console.log('layer added');
             //App.MapModule.createLayer('mapquest_hyb', 'mapquest_hyb', {});
@@ -126,12 +142,15 @@ require([
             
             $('#app-carousel-region').velocity('fadeOut', 1000);
         });
+        
 
         App.vent.on("BubbleMenuModule:item:click", function(args){
             console.log($(args.delegateTarget).attr('id'))
             App.execute('load', 'carousel', 'CarouselModule', {region: App.carouselRegion, carousel_id: 'carousel' });
             $('#app-carousel-region').velocity('fadeIn', 1000);
         });
+        
+        
         
         require([
             //'modules/map/loader',
@@ -219,8 +238,12 @@ require([
                 */
 
                 //App.execute('load', 'map', 'MapModule', {region: App.mapRegion, map_id: 'map'});            
-                //App.execute('load', 'bubblemenu', 'BubbleMenuModule', {region: App.bubblemenuRegion, bubblemenu_id: 'bubblemenu', items: _bubblemenuitems});            
-                App.execute('load', 'layout', 'LayoutModule', {region: App.mapRegion, map_id: 'map'}); 
+                //App.execute('load', 'bubblemenu', 'BubbleMenuModule', {region: App.bubblemenuRegion, bubblemenu_id: 'bubblemenu', items: _bubblemenuitems});
+                
+                
+                
+                App.execute('load', 'layout', 'LayoutModule', {region: App.layoutRegion, layout_id: 'layout'});
+ 
 
                     
                 $('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });
