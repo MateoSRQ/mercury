@@ -15,8 +15,8 @@ require([
         App.addRegions({
             layoutRegion: '#app-layout-region', 
             //mapRegion: '#app-map-region',
-            carouselRegion: '#app-carousel-region',
-            bubblemenuRegion: '#app-bubblemenu-region'
+            //carouselRegion: '#app-carousel-region',
+            //bubblemenuRegion: '#app-bubblemenu-region'
         });
         
         /* APPLICATION FUNCTIONS */
@@ -44,8 +44,38 @@ require([
         App.vent.on('LayoutItemView.render', function(args){
             App.execute('debug', 'App.LayoutItemView.render called.', 0);
             console.log(args);
-        }); 
+        });
         
+        App.vent.on('LayoutModule:start', function(){
+            App.execute('debug', 'App.LayoutModule start event called.', 0);
+            App.LayoutModule.add([
+                {
+                    name: 'layout_1',
+                    id: 'layout_1'
+                },
+                {
+                    name: 'layout_2',
+                    id: 'layout_2'
+                },
+                {
+                    name: 'layout_3',
+                    id: 'layout_3'
+                }
+            ]);
+            console.log(App);
+            App.execute('load', 'map', 'MapModule', {region: App.layout_1, map_id: 'layout_layout_1'});  
+        });
+        
+        
+        
+        
+        App.vent.on('LayerItemCollection:add', function(layer){
+            console.log('layer added');
+            //App.MapModule.createLayer('mapquest_hyb', 'mapquest_hyb', {});
+            //console.log(layer);
+            //App.MapModule.createLayer(layer.get('type'), layer.get('name'), {});
+            
+        });
         
         App.setBaseLayer = function(layerName) {
             console.log('set Base Layer to ' + layerName)
@@ -61,8 +91,6 @@ require([
                 }
             }) 
         }
-
-
 
         // App before:start event function
         App.on('before:start', function(options){
@@ -83,10 +111,10 @@ require([
         App.vent.on('MapModule:start', function(){
             App.execute('debug', 'App.MapModule start event called.', 0);
             App.MapModule.initializeMap();
-            var item = App.layers.at(0);
-               App.MapModule.createLayer(item.get('type'), item.get('name'), {}); // CHECK THIS
+            //var item = App.layers.at(0);
+               //App.MapModule.createLayer(item.get('type'), item.get('name'), {}); // CHECK THIS
 
-            //App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
+            App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
             //App.MapModule.loadTopoJSON('../../data/distritos_3857_1000x.json') //
             //App.MapModule.D3FromTopoJSON('data/us.json') //*/
             //$('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });
@@ -110,29 +138,10 @@ require([
             });
         });
         
-        App.vent.on('LayoutModule:start', function(){
-            App.execute('debug', 'App.LayoutModule start event called.', 0);
-            App.LayoutModule.add([
-                {
-                    id: 'layout_1'
-                },
-                {
-                    id: 'layout_2'
-                },
-                {
-                    id: 'layout_3'
-                }
-            ]); 
-        });
+
         
         
-        App.vent.on('LayerItemCollection:add', function(layer){
-            console.log('layer added');
-            //App.MapModule.createLayer('mapquest_hyb', 'mapquest_hyb', {});
-            //console.log(layer);
-            //App.MapModule.createLayer(layer.get('type'), layer.get('name'), {});
-            
-        });
+
         
         App.vent.on('CarouselView:button:click', function(item){
             console.log('hhhhhh')
@@ -185,15 +194,17 @@ require([
                 //_bubblemenuitems.push({id: 'menu_item_1', name: 'menu_item_1', icon: 'flaticon-fire16', icon_alt: 'flaticon-cogs3'});
                 //_bubblemenuitems.push({id: 'menu_item_2', name: 'menu_item_2', icon: 'flaticon-comment33', icon_alt: 'flaticon-fire16'});
                 //_bubblemenuitems.push({id: 'menu_item_3', name: 'menu_item_3', icon: 'flaticon-flickr8', icon_alt: 'flaticon-plus26'});
-                /*
+                
                 App.layers = new App.LayerItemCollection;
                 App.layers.add([
+                    /*
                     {
                         type: 'mapquest_osm',
                         name: 'MapQuest OSM',
                         image: 'data/images/image_001.fw.png',
                         isBase: true
                     },
+                    
                     {
                         type: 'mapquest_hyb',
                         name: 'MapQuest Hibrido',
@@ -206,6 +217,7 @@ require([
                         image: 'data/images/image_002.fw.png',
                         isBase: true
                     },
+                    */
                     {
                         type: 'local_topojson',
                         name: 'Perú Población 2014',
@@ -239,14 +251,14 @@ require([
                     },
                     */
                    
-                //]);                
+                ]);                
                 
-                /*
+                
                 App.layers.on("add", function(layer) {
                     console.log('added!')
                     App.vent.trigger('LayerItemCollection:add', layer);
                 });
-                */
+                
 
                 //App.execute('load', 'map', 'MapModule', {region: App.mapRegion, map_id: 'map'});            
                 //App.execute('load', 'bubblemenu', 'BubbleMenuModule', {region: App.bubblemenuRegion, bubblemenu_id: 'bubblemenu', items: _bubblemenuitems});

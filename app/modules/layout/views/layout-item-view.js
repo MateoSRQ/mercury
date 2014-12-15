@@ -28,7 +28,12 @@ define([
             onRender: function(){
                 App.execute('debug', 'LayoutItemView.render event called.', 0);
                 App.LayoutModule.vent.trigger('LayoutItemView.render', this);
-                this.$el.resizable().draggable(); 
+                this.$el.resizable({
+                    containment: 'parent'
+                });
+                this.$el.draggable({
+                    containment: 'parent'
+                }); 
             },
             
             click: function(i, e) {

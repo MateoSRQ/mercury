@@ -53,7 +53,9 @@ require([
                     this.collection.add(layouts);
                     var self = this;
                     _.each(layouts, function(layout){
-                        console.log(layout.id)
+                        console.log(layout.id);
+                        console.log("App.addRegions({" + layout.name + ": '#layout_" + layout.id + "' });");
+                        eval("App.addRegions({" + layout.name + ": '#layout_" + layout.id + "' });");
                     })
                     App.vent.trigger('LayoutModule:add', layouts);
                 };
