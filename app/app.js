@@ -19,21 +19,8 @@ require([
             bubblemenuRegion: '#app-bubblemenu-region'
         });
         
-        App.setBaseLayer = function(layerName) {
-            console.log('set Base Layer to ' + layerName)
-            App.layers.each( function(item){
-                if (item.get('isBase')) {
-                    console.log('checking ' + item.get('name'));
-                    if (item.get('name') == layerName) {
-                        App.MapModule.setLayerVisibility(item.get('name'), true);
-                    }
-                    else {
-                        App.MapModule.setLayerVisibility(item.get('name'), false);
-                    }
-                }
-            }) 
-        }
-
+        /* APPLICATION FUNCTIONS */
+        
         // App debug command, only show messages greater than global debug set.
         App.commands.setHandler("debug", function(text, level){
             if (level >=  window.debug){
@@ -52,6 +39,30 @@ require([
                 });    
             }
         });
+        
+        /* LAYOUT EVENTS */
+        App.vent.on('LayoutItemView.render', function(args){
+            App.execute('debug', 'App.LayoutItemView.render called.', 0);
+            console.log(args);
+        }); 
+        
+        
+        App.setBaseLayer = function(layerName) {
+            console.log('set Base Layer to ' + layerName)
+            App.layers.each( function(item){
+                if (item.get('isBase')) {
+                    console.log('checking ' + item.get('name'));
+                    if (item.get('name') == layerName) {
+                        App.MapModule.setLayerVisibility(item.get('name'), true);
+                    }
+                    else {
+                        App.MapModule.setLayerVisibility(item.get('name'), false);
+                    }
+                }
+            }) 
+        }
+
+
 
         // App before:start event function
         App.on('before:start', function(options){
@@ -150,7 +161,7 @@ require([
             $('#app-carousel-region').velocity('fadeIn', 1000);
         });
         
-        
+      
         
         require([
             //'modules/map/loader',

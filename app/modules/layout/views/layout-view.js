@@ -19,6 +19,7 @@ define([
                 })
             },
             onShow: function(){
+                
             }
         });
     }

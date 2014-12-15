@@ -16,7 +16,6 @@ define([
             attributes : function () {
                 return {
                     class : 'app_layout_item',
-                    //id : this.options.carousel_id
                 };
             },
             template: function(model) {
@@ -27,8 +26,9 @@ define([
             onShow: function(){
             },
             onRender: function(){
-                App.execute('debug', 'App.LayoutModule onRender event called.', 0);
-                App.LayoutModule.vent.trigger('LayoutItemView::render', this);
+                App.execute('debug', 'LayoutItemView.render event called.', 0);
+                App.LayoutModule.vent.trigger('LayoutItemView.render', this);
+                this.$el.resizable().draggable(); 
             },
             
             click: function(i, e) {
