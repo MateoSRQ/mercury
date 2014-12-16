@@ -46,14 +46,15 @@ require([
                     name: 'layout_1',
                     id: 'layout_1',
                     options: {
-                        
                         draggable: {
                             grid: [ 10, 10 ],
-                            containment: 'parent',
+                            containment: 'parent'
                         },
                         resizable: {
                             grid: [ 10, 10 ],
                             containment: 'parent',
+                            minHeight: 250,
+                            minWidth: 250
                         }   
                     }
                 },
@@ -99,9 +100,7 @@ require([
                App.MapModule.updateSize();
             }
         });
-        
-        
-        
+
         App.setBaseLayer = function(layerName) {
             console.log('set Base Layer to ' + layerName)
             App.layers.each( function(item){
