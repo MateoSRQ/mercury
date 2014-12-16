@@ -55,7 +55,7 @@ require([
                     _.each(layouts, function(layout){
                         console.log(layout.id);
                         console.log("App.addRegions({" + layout.name + ": '#layout_" + layout.id + "' });");
-                        eval("App.addRegions({" + layout.name + ": '#layout_" + layout.id + "' });");
+                        eval("App.addRegions({" + layout.name + ": '#" + layout.id + "' });");
                     })
                     App.vent.trigger('LayoutModule:add', layouts);
                 };
@@ -64,8 +64,16 @@ require([
             App.LayoutModule.vent.on('LayoutItemView.render', function(args){
                 App.execute('debug', 'LayoutItemView.render event called.', 0);
                 App.vent.trigger('LayoutItemView.render', args);
+            });
+            
+            App.LayoutModule.vent.on('LayoutItemView.resize.stop', function(args){
+                App.execute('debug', 'LayoutItemView.resize.stop event called.', 0);
+                App.vent.trigger('LayoutItemView.resize.stop', args);
             })
 
+           
+            
+            
             App.vent.trigger("LayoutModule:start");
         }
         

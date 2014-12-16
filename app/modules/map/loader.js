@@ -40,13 +40,13 @@ require([
         function (ol, d3, topojson) {
             
             var mousePositionControl = new ol.control.MousePosition({
-              coordinateFormat: ol.coordinate.createStringXY(4),
-              projection: 'EPSG:4326',
-              // comment the following two lines to have the mouse position
-              // be placed within the map.
-              className: 'custom-mouse-position',
-              target: document.getElementById('mouse-position'),
-              undefinedHTML: '&nbsp;'
+                coordinateFormat: ol.coordinate.createStringXY(4),
+                projection: 'EPSG:4326',
+                // comment the following two lines to have the mouse position
+                // be placed within the map.
+                className: 'custom-mouse-position',
+                target: document.getElementById('mouse-position'),
+                undefinedHTML: '&nbsp;'
             });
             
             App.module("MapModule", function (MapModule, App, Backbone, Marionette, $, _) {
@@ -119,6 +119,10 @@ require([
 
                     });
                 }
+                
+                MapModule.updateSize = function() {
+                    App.MapModule.mapHandler.updateSize();
+                };
 
                 MapModule.loadTopoJSON = function(url) {
                     require([
@@ -240,7 +244,6 @@ require([
                 
                 /* Should make it generic */
                 MapModule.setCenter = function (coordinates) {
-                    
                     var _proj = ol.proj.transform(coordinates, 'EPSG:4326', 'EPSG:3857');
                     App.MapModule.mapHandler.getView().setCenter(_proj);
                 }
@@ -251,7 +254,6 @@ require([
                 }
                                 
                 MapModule.createLayer = function(layerType, layerName, options) {
-                    
                     if (typeof(MapModule.layers[layerName]) !== undefined && !MapModule.layers[layerName]) {
                         console.log('createlayer');
                         switch (layerType) {

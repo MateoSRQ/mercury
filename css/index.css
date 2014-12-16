@@ -27,25 +27,23 @@ html, body {
 }
 
 #layout_layout_1 {
-    width: 100px;
-    height: 100px;
-    background: #ff0000;
-    position: absolute;
-    width: 500px;
-    height: 500px;
+
+    background: #fff;
+    width: 50%;
+    height: 50%;
 }
 
 #layout_layout_2 {
     width: 100px;
     height: 100px;
-    background: #00ff00;
+    background: #fff;
 
 }
 
 #layout_layout_3 {
     width: 100px;
     height: 100px;
-    background: #0000ff;
+    background: #fff;
 
 }
 

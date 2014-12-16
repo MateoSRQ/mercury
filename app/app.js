@@ -1,17 +1,13 @@
-/** app.js file */
 'use strict';
-
 require([
     'marionette'
 ],
     function (Marionette) {
-        // App definition
         window.App = new Backbone.Marionette.Application({
         });
         
         App.layers = null;
-     
-        // App main regions, css in root/css/index.css
+
         App.addRegions({
             layoutRegion: '#app-layout-region', 
             //mapRegion: '#app-map-region',
@@ -20,15 +16,12 @@ require([
         });
         
         /* APPLICATION FUNCTIONS */
-        
-        // App debug command, only show messages greater than global debug set.
         App.commands.setHandler("debug", function(text, level){
             if (level >=  window.debug){
                 console.log('debug: ' + text);
             }
         });
         
-        // RequireJS module load command, to load module located in root\app\modules\dirname, with name module, and start options objects.
         App.commands.setHandler("load", function(dirname, module, options){
             App.execute('debug', 'App.commands.setHandler() called.', 0);
             if (!eval('App.' + module)) {
@@ -51,31 +44,63 @@ require([
             App.LayoutModule.add([
                 {
                     name: 'layout_1',
-                    id: 'layout_1'
+                    id: 'layout_1',
+                    options: {
+                        
+                        draggable: {
+                            grid: [ 10, 10 ],
+                            containment: 'parent',
+                        },
+                        resizable: {
+                            grid: [ 10, 10 ],
+                            containment: 'parent',
+                        }   
+                    }
                 },
                 {
                     name: 'layout_2',
-                    id: 'layout_2'
+                    id: 'layout_2',
+                    options: {
+                        draggable: {
+                            grid: [ 10, 10 ]
+                        },
+                        resizable: {
+                            grid: [ 10, 10 ]
+                        }   
+                    }
                 },
                 {
                     name: 'layout_3',
-                    id: 'layout_3'
+                    id: 'layout_3',
+                    options: {
+                        draggable: {
+                            grid: [ 20, 20 ]
+                        },
+                        resizable: {
+                            grid: [ 20, 20 ]
+                        }   
+                    }
                 }
             ]);
-            console.log(App);
-            App.execute('load', 'map', 'MapModule', {region: App.layout_1, map_id: 'layout_layout_1'});  
-        });
-        
-        
-        
+            App.execute('load', 'map', 'MapModule', {region: App.layout_1, map_id: 'map'});  
+        });      
         
         App.vent.on('LayerItemCollection:add', function(layer){
             console.log('layer added');
             //App.MapModule.createLayer('mapquest_hyb', 'mapquest_hyb', {});
             //console.log(layer);
             //App.MapModule.createLayer(layer.get('type'), layer.get('name'), {});
-            
         });
+        
+        App.vent.on('LayoutItemView.resize.stop', function(args){
+            /* SPECIFIC FOR THIS IMPLEMENTATION */
+            if (args.ui.element[0].id == 'layout_layout_1') {
+               console.log('stop stop');
+               App.MapModule.updateSize();
+            }
+        });
+        
+        
         
         App.setBaseLayer = function(layerName) {
             console.log('set Base Layer to ' + layerName)

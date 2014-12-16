@@ -1,4 +1,11 @@
 .app_layout_item  {
     position: absolute !important;
     z-index: 500 !important;
+    padding: 5px !important;
+}
+
+.layout_container {
+    width: 100%;
+    height: 100%;
+    
 }
