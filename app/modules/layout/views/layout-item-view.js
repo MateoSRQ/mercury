@@ -11,7 +11,7 @@ define([
                 this.$el.prop("id", "layout_" + this.model.get("id"));
             },
             events: {
-
+                'click .icon': 'icon_click'
             },
             attributes : function () {
                 return {
@@ -49,6 +49,35 @@ define([
                     this.$el.resizable(_options.resizable);
                 }
                 App.LayoutModule.vent.trigger('LayoutItemView.render', this);
+            },
+            
+            icon_click: function(i) {
+                var _size = (this.$el.width() > this.$el.height())?this.$el.width():this.$el.height();
+
+                this.$el.velocity({
+                    properties: { width: '80px', height: '80px', borderRadius: _size + 'px' },
+                    options:    { duration: 400, easing: "spring", mobileHA: true }
+                });
+
+                this.$el.find('.layout_container').velocity({
+                    properties: {opacity: 0 },
+                    options:    {duration: 200, easing: 'lineal', mobileHA: true }
+                });
+                this.$el.find('.big_icon').velocity({
+                    properties: {opacity: 1, borderRadius: '50px' },
+                    options:    {duration: 200, easing: 'lineal', mobileHA: true }
+                })
+                this.$el.find('.icon').velocity({
+                    properties: {opacity: 0 },
+                    options:    {duration: 100, easing: 'lineal', mobileHA: true }
+                })
+                this.$el.find('.ui-resizable-handle').velocity({
+                    properties: {opacity: 0 },
+                    options:    {duration: 100, easing: 'lineal', mobileHA: true }
+                })               
+                
+                
+                
             },
             
             click: function(i, e) {

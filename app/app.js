@@ -47,11 +47,11 @@ require([
                     id: 'layout_1',
                     options: {
                         draggable: {
-                            grid: [ 10, 10 ],
+                            grid: [ 1, 1 ],
                             containment: 'parent'
                         },
                         resizable: {
-                            grid: [ 10, 10 ],
+                            grid: [ 1, 1 ],
                             containment: 'parent',
                             minHeight: 250,
                             minWidth: 250
@@ -63,11 +63,15 @@ require([
                     id: 'layout_2',
                     options: {
                         draggable: {
-                            grid: [ 10, 10 ]
+                            grid: [ 10, 10 ],
+                            containment: 'parent'
                         },
                         resizable: {
-                            grid: [ 10, 10 ]
-                        }   
+                            grid: [ 10, 10 ],
+                            containment: 'parent',
+                            minHeight: 100,
+                            minWidth: 100
+                        }    
                     }
                 },
                 {
@@ -75,10 +79,14 @@ require([
                     id: 'layout_3',
                     options: {
                         draggable: {
-                            grid: [ 20, 20 ]
+                            grid: [ 10, 10 ],
+                            containment: 'parent'
                         },
                         resizable: {
-                            grid: [ 20, 20 ]
+                            grid: [ 10, 10 ],
+                            containment: 'parent',
+                            minHeight: 250,
+                            minWidth: 250
                         }   
                     }
                 }
