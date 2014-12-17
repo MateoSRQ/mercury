@@ -4,6 +4,9 @@ define([
     'text!modules/layout/templates/layout-item-view.html',
     ],
     function(layout_item_view){
+        //  variables
+        var _width, _height = null;
+        
         
         App.LayoutModule.LayoutItemView = Backbone.Marionette.ItemView.extend({
             tagName: 'div',
@@ -11,7 +14,8 @@ define([
                 this.$el.prop("id", "layout_" + this.model.get("id"));
             },
             events: {
-                'click .icon': 'icon_click'
+                'click .icon': 'icon_click',
+                'dblclick .big_icon': 'big_icon_click'
             },
             attributes : function () {
                 return {
@@ -53,7 +57,8 @@ define([
             
             icon_click: function(i) {
                 var _size = (this.$el.width() > this.$el.height())?this.$el.width():this.$el.height();
-
+                this._width  =  this.$el.width();
+                this._height =  this.$el.height();
                 this.$el.velocity({
                     properties: { width: '80px', height: '80px', borderRadius: _size + 'px' },
                     options:    { duration: 400, easing: "spring", mobileHA: true }
@@ -67,6 +72,8 @@ define([
                     properties: {opacity: 1, borderRadius: '50px' },
                     options:    {duration: 200, easing: 'lineal', mobileHA: true }
                 })
+                this.$el.find('.big_icon').css('pointerEvents', 'all');
+                
                 this.$el.find('.icon').velocity({
                     properties: {opacity: 0 },
                     options:    {duration: 100, easing: 'lineal', mobileHA: true }
@@ -74,11 +81,43 @@ define([
                 this.$el.find('.ui-resizable-handle').velocity({
                     properties: {opacity: 0 },
                     options:    {duration: 100, easing: 'lineal', mobileHA: true }
-                })               
-                
-                
-                
+                });
+                this.$el.find('.ui-resizable-handle').css('pointerEvents', 'none');
             },
+
+            big_icon_click: function(i) {
+                this.$el.velocity({
+                    properties: {  borderRadius: '0px' },
+                    options:    { duration: 100, easing: "lineal", mobileHA: true }
+                });
+                
+                this.$el.velocity({
+                    properties: {  width: this._width + 'px', height: this._height + 'px'},
+                    options:    { duration: 300, easing: "spring", mobileHA: true }
+                });                
+
+
+                this.$el.find('.layout_container').velocity({
+                    properties: {opacity: 1 },
+                    options:    {duration: 100, easing: 'lineal', mobileHA: true }
+                });
+                this.$el.find('.big_icon').velocity({
+                    properties: {opacity: 0, borderRadius: '0px' },
+                    options:    {duration: 100, easing: 'lineal', mobileHA: true }
+                })
+                this.$el.find('.big_icon').css('pointerEvents', 'none');
+                
+                this.$el.find('.icon').velocity({
+                    properties: {opacity: 1 },
+                    options:    {duration: 100, easing: 'lineal', mobileHA: true }
+                })
+                this.$el.find('.ui-resizable-handle').velocity({
+                    properties: {opacity: 1 },
+                    options:    {duration: 100, easing: 'lineal', mobileHA: true }
+                })
+                this.$el.find('.ui-resizable-handle').css('pointerEvents', 'all');
+            },
+
             
             click: function(i, e) {
                 //e.preventDefault();
