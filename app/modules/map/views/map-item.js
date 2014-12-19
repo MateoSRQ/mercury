@@ -1,10 +1,10 @@
 'use strict';
 
 define([
-    'text!modules/map/templates/map-view.html',
+    'text!modules/map/templates/map-item.html',
     ],
     function(map_view){
-        App.MapModule.MapView = Backbone.Marionette.ItemView.extend({
+        App.MapModule.MapItemView = Backbone.Marionette.ItemView.extend({
             triggers: {
             },
             attributes : function () {

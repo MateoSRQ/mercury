@@ -2,7 +2,6 @@
 
 App.module("MapModule", function (MapModule) {
     // check if these are visible
-    
     MapModule.startWithParent = false;
     MapModule.views = {};
     MapModule.options = {};
@@ -32,32 +31,23 @@ requirejs.config({
 });
 
 require([
-    'modules/map/views/map-view',
-    'modules/map/models/map-item'
+    'modules/map/models/map-item',
+    
 ],
     function() {
         require([
             'ol',
             //'d3',
             //'topojson',
+            'modules/map/views/map-item',
             'modules/map/models/map-collection',
             'css!modules/map/css/map-module.css'
         ],   
         function (ol) {
-            /*
-            var mousePositionControl = new ol.control.MousePosition({
-                coordinateFormat: ol.coordinate.createStringXY(4),
-                projection: 'EPSG:4326',
-                // comment the following two lines to have the mouse position
-                // be placed within the map.
-                className: 'custom-mouse-position',
-                target: document.getElementById('mouse-position'),
-                undefinedHTML: '&nbsp;'
-            });
-            */
+
             App.module("MapModule", function (MapModule, App, Backbone, Marionette, $, _) {
                 this.addInitializer(function(){
-                    console.log('[MAP LOADER.JS] MapModule::initialize function invoked');
+                    App.execute('debug', 'App.MapModule.addInitializer function called.', 0);
                     this.collection = new App.MapModule.MapItemCollection();
                     //this.views.MapView = new App.MapModule.MapView({ map_id: this.options.map_id });
                     //this.options.region.show(this.views.MapView);
@@ -66,14 +56,10 @@ require([
                 MapModule.add = function(maps) {
                     App.execute('debug', 'App.MapModule add function called.', 0);
                     this.collection.add(maps);
-                    var self = this;
                     App.vent.trigger('App.MapModule.add', maps);
                 };
                 
                 MapModule.vent.on('App.MapModule.MapItemCollection.addItem', function(args) {
-                    if (test) {
-                        //code
-                    }
                 })
             
                 // CHECKED THRU THIS
@@ -319,3 +305,15 @@ require([
         
     )}
 )
+
+            /*
+            var mousePositionControl = new ol.control.MousePosition({
+                coordinateFormat: ol.coordinate.createStringXY(4),
+                projection: 'EPSG:4326',
+                // comment the following two lines to have the mouse position
+                // be placed within the map.
+                className: 'custom-mouse-position',
+                target: document.getElementById('mouse-position'),
+                undefinedHTML: '&nbsp;'
+            });
+            */
