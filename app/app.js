@@ -92,7 +92,30 @@ require([
                 }
             ]);
             App.execute('load', 'map', 'MapModule', {region: App.layout_1, map_id: 'map'});  
-        });      
+        });
+        
+        App.vent.on('MapModule:start', function(){
+            App.execute('debug', 'App.MapModule start event called.', 0);
+            App.MapModule.add([
+                {
+                    id: 1,
+                    name: 'map_1'
+                },
+                {
+                    id: 2,
+                    name: 'map_2'
+                }
+            ]);
+            
+            //App.MapModule.initializeMap();
+            //var item = App.layers.at(0);
+               //App.MapModule.createLayer(item.get('type'), item.get('name'), {}); // CHECK THIS
+
+            //App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
+            //App.MapModule.loadTopoJSON('../../data/distritos_3857_1000x.json') //
+            //App.MapModule.D3FromTopoJSON('data/us.json') //*/
+            //$('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });
+        });
         
         App.vent.on('LayerItemCollection:add', function(layer){
             console.log('layer added');
@@ -140,17 +163,7 @@ require([
         
         // App.MapModule start event function, used to initialize map layers based on App.layers collection.
         // Also ends splash screen.
-        App.vent.on('MapModule:start', function(){
-            App.execute('debug', 'App.MapModule start event called.', 0);
-            App.MapModule.initializeMap();
-            //var item = App.layers.at(0);
-               //App.MapModule.createLayer(item.get('type'), item.get('name'), {}); // CHECK THIS
 
-            App.MapModule.createLayer('mapquest_osm', 'mapquest_osm', {});
-            //App.MapModule.loadTopoJSON('../../data/distritos_3857_1000x.json') //
-            //App.MapModule.D3FromTopoJSON('data/us.json') //*/
-            //$('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });
-        });
         
         // App.CarouselModule start event function, used to initialize carousel cards based on App.lateyers collection.
         // Also creates deck
@@ -169,11 +182,6 @@ require([
                 placement: 'left'
             });
         });
-        
-
-        
-        
-
         
         App.vent.on('CarouselView:button:click', function(item){
             console.log('hhhhhh')
@@ -194,15 +202,12 @@ require([
             
             $('#app-carousel-region').velocity('fadeOut', 1000);
         });
-        
 
         App.vent.on("BubbleMenuModule:item:click", function(args){
             console.log($(args.delegateTarget).attr('id'))
             App.execute('load', 'carousel', 'CarouselModule', {region: App.carouselRegion, carousel_id: 'carousel' });
             $('#app-carousel-region').velocity('fadeIn', 1000);
         });
-        
-      
         
         require([
             //'modules/map/loader',
@@ -292,13 +297,13 @@ require([
                 });
                 
 
-                //App.execute('load', 'map', 'MapModule', {region: App.mapRegion, map_id: 'map'});            
+                        
                 //App.execute('load', 'bubblemenu', 'BubbleMenuModule', {region: App.bubblemenuRegion, bubblemenu_id: 'bubblemenu', items: _bubblemenuitems});
                 
                 
                 
                 App.execute('load', 'layout', 'LayoutModule', {region: App.layoutRegion, layout_id: 'layout'});
- 
+                App.execute('load', 'map', 'MapModule', {});    
 
                     
                 $('#splash-screen').velocity("fadeOut", { delay: 500, duration: 900 });

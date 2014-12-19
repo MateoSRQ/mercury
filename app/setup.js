@@ -19,7 +19,7 @@ requirejs.config({
         'jquery': '../jquery/jquery-2.1.1.min',
         'underscore': '../underscore/underscore-1.7.0.min',
         'backbone': '../backbone/backbone-1.1.2.min',
-        'marionette': '../marionette/marionette-2.2.0.min',
+        'marionette': '../marionette/marionette-2.3.0.min',
 
         'bootstrap': '../bootstrap/js/bootstrap.min',
         'css_bootstrap': '../bootstrap/css',

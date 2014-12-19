@@ -1,0 +1,5 @@
+WORKFLOW FOR MODULES
+
+* Initializer set up requisites.
+* Add function adds items to collection.
+* Maybe using a collection view will sort out all the wiring.

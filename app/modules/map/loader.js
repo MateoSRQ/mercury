@@ -1,11 +1,15 @@
 'use strict';
 
 App.module("MapModule", function (MapModule) {
+    // check if these are visible
+    
     MapModule.startWithParent = false;
     MapModule.views = {};
     MapModule.options = {};
-    MapModule.mapHandler = null;
+    MapModule.collection = {};
+    MapModule.handlers = null;
     MapModule.layers = [];
+    MapModule.vent = new Backbone.Wreqr.EventAggregator();
 });
 
 App.MapModule.on('before:start', function(options){
@@ -28,17 +32,19 @@ requirejs.config({
 });
 
 require([
-    'modules/map/views/map-view'
+    'modules/map/views/map-view',
+    'modules/map/models/map-item'
 ],
     function() {
         require([
             'ol',
-            'd3',
-            'topojson',
+            //'d3',
+            //'topojson',
+            'modules/map/models/map-collection',
             'css!modules/map/css/map-module.css'
         ],   
-        function (ol, d3, topojson) {
-            
+        function (ol) {
+            /*
             var mousePositionControl = new ol.control.MousePosition({
                 coordinateFormat: ol.coordinate.createStringXY(4),
                 projection: 'EPSG:4326',
@@ -48,8 +54,30 @@ require([
                 target: document.getElementById('mouse-position'),
                 undefinedHTML: '&nbsp;'
             });
-            
+            */
             App.module("MapModule", function (MapModule, App, Backbone, Marionette, $, _) {
+                this.addInitializer(function(){
+                    console.log('[MAP LOADER.JS] MapModule::initialize function invoked');
+                    this.collection = new App.MapModule.MapItemCollection();
+                    //this.views.MapView = new App.MapModule.MapView({ map_id: this.options.map_id });
+                    //this.options.region.show(this.views.MapView);
+                });
+            
+                MapModule.add = function(maps) {
+                    App.execute('debug', 'App.MapModule add function called.', 0);
+                    this.collection.add(maps);
+                    var self = this;
+                    App.vent.trigger('App.MapModule.add', maps);
+                };
+                
+                MapModule.vent.on('App.MapModule.MapItemCollection.addItem', function(args) {
+                    if (test) {
+                        //code
+                    }
+                })
+            
+                // CHECKED THRU THIS
+            
                 MapModule.initializeMap = function() {
                     this.mapHandler = new ol.Map({
                         target: this.options.map_id,
@@ -67,11 +95,7 @@ require([
                     })
 
                 };
-                this.addInitializer(function(){
-                    console.log('[MAP LOADER.JS] MapModule::initialize function invoked');
-                    this.views.MapView = new App.MapModule.MapView({ map_id: this.options.map_id });
-                    this.options.region.show(this.views.MapView);
-                });
+
                 
                 MapModule.D3FromTopoJSON = function(url) {
                     d3.json(url, function(error, us) {
